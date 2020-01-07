@@ -11,12 +11,11 @@ jobs:
       with:
         python-version: '3.8.0'
     - name: Build the Docker image
-      run: 
-        - cd py/kubeflow/tf_operator
-        - pipenv install
-        - pipenv shell
-        - cd ../..
-        - python -m kubeflow.tf_operator.release local --skip-push
+      run: cd py/kubeflow/tf_operator
+      run: pipenv install
+      run: pipenv shell
+      run: cd ../..
+      run: python -m kubeflow.tf_operator.release local --skip-push
 
     - uses: anchore/scan-action@master
       with:
