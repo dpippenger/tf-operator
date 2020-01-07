@@ -1,17 +1,28 @@
 name: Docker Image CI
 on: [push]
+#  schedule:
+#    - cron:  '*/15 * * * *'
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
+    - uses: actions/setup-python@v1
+      with:
+        python-version: '3.8.0'
     - name: Build the Docker image
-      run: docker build . --file build/images/tf_operator/Dockerfile --tag localbuild/testimage:latest
+      run: 
+        - cd py/kubeflow/tf_operator
+        - pipenv install
+        - pipenv shell
+        - cd ../..
+        - python -m kubeflow.tf_operator.release local --skip-push
+
     - uses: anchore/scan-action@master
       with:
         image-reference: "localbuild/testimage:latest"
         dockerfile-path: "./build/images/tf_operator/Dockerfile"
-        fail-build: true
+        fail-build: false
     - name: anchore inline scan JSON results
       run: for j in `ls ./anchore-reports/*.json`; do echo "---- ${j} ----"; cat ${j}; echo; done
 
