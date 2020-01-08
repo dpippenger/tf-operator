@@ -21,7 +21,7 @@ jobs:
       with:
         python-version: '3.8.0'
     - name: Build the Docker image
-       run: docker build . --file build/images/tf_operator/Dockerfile --tag localbuild/testimage:latest
+      run: docker build . --file build/images/tf_operator/Dockerfile --tag localbuild/testimage:latest
 #      run: |
 #        sleep 60
 #        echo "::set-env name=GOPATH::$(go env GOPATH)"
