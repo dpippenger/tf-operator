@@ -13,9 +13,9 @@ jobs:
     - name: Build the Docker image
       run: |
         pip install pipenv 
-        cd py/kubeflow/tf_operator 
+        cd py
+        cp kubeflow/tf_operator/Piplock* .
         pipenv install 
-        cd ../.. 
         pipenv run python -m kubeflow.tf_operator.release local --skip-push
     - uses: anchore/scan-action@master
       with:
