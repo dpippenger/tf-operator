@@ -21,15 +21,17 @@ jobs:
       with:
         python-version: '3.8.0'
     - name: Build the Docker image
-      run: |
-        sleep 60
-        echo "::set-env name=GOPATH::$(go env GOPATH)"
-        echo "::add-path::$(go env GOPATH)/bin"
-        pip install pipenv
-        cd py
-        cp kubeflow/tf_operator/Pipfile* .
-        pipenv install
-        pipenv run python -m kubeflow.tf_operator.release local
+       run: |
+         docker build . --file build/images/tf_operator/Dockerfile --tag localbuild/testimage:latest
+#      run: |
+#        sleep 60
+#        echo "::set-env name=GOPATH::$(go env GOPATH)"
+#        echo "::add-path::$(go env GOPATH)/bin"
+#        pip install pipenv
+#        cd py
+#        cp kubeflow/tf_operator/Pipfile* .
+#        pipenv install
+#        pipenv run python -m kubeflow.tf_operator.release local
     - uses: anchore/scan-action@master
       with:
         image-reference: "localbuild/testimage:latest"
