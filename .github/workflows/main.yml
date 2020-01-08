@@ -16,7 +16,7 @@ jobs:
         cd py
         cp kubeflow/tf_operator/Pipfile* .
         pipenv install 
-        pipenv run python -m kubeflow.tf_operator.release local --skip-push
+        pipenv run python -m kubeflow.tf_operator.release local --skip_push
     - uses: anchore/scan-action@master
       with:
         image-reference: "localbuild/testimage:latest"
