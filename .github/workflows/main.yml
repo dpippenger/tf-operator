@@ -7,15 +7,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
+    - uses: actions/setup-go@v1
+      with:
+        go-version: '1.10.x'
     - uses: actions/setup-python@v1
       with:
         python-version: '3.8.0'
     - name: Build the Docker image
       run: |
-        pip install pipenv 
+        pip install pipenv
         cd py
         cp kubeflow/tf_operator/Pipfile* .
-        pipenv install 
+        pipenv install
         pipenv run python -m kubeflow.tf_operator.release local --no-push
     - uses: anchore/scan-action@master
       with:
