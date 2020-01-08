@@ -122,7 +122,7 @@ def create_latest(bucket, sha, target):
 def build_operator_image(root_dir,
                          registry,
                          project=None,
-                         should_push=True,
+                         should_push=False,
                          version_tag=None):
   """Build the main docker image for the TFJob CRD.
   Args:
